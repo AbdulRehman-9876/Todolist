@@ -44,7 +44,7 @@ app.put("/update_itemDescription/:id", async (req, res) => {
         const {description} = req.body;
         const todoItemsFromDB = await TodoItem.findByIdAndUpdate(req.params.id,{new:true});
         if(!todoItemsFromDB){
-            res.status(404).json({message:"error in fetching from db"});
+            res.status(404).json({message:"item not found"});
         } else {
             todoItemsFromDB.description = description;
             res.status(200).json({message:"updated successfully"});
@@ -58,7 +58,7 @@ app.put("/update_itemIsCompleted/:id", async(req, res)=>{
     try{
         const todoItemsFromDB = await TodoItem.findByIdAndUpdate(req.params.id,{new:true});
         if(!todoItemsFromDB){
-            res.status(404).json({message:"error in fetching from db"})
+            res.status(404).json({message:"item not found"})
         } else {
             todoItemsFromDB.isCompleted = !todoItemsFromDB;
             res.status(200).json({message:"updated successfully"})
@@ -73,7 +73,7 @@ app.get("/get_items", async(req, res) => {
     try{
     const todoItemsFromDB = await TodoItem.find();
     if(!todoItemsFromDB){
-        return res.status(404).json({message: "error in fetching from db"})
+        return res.status(404).json({message: "item not found"})
     } else{
         res.status(200).json(todoItemsFromDB);
     }
@@ -87,7 +87,7 @@ app.get("/get_item/:id", async(req, res) => {
     try{
     const todoItemsFromDB = await TodoItem.findById(req.params.id);
     if(!todoItemsFromDB){
-        res.status(404).json({message:"error in fetching from db"})
+        res.status(404).json({message:"item not found"})
     } else{
         res.status(200).json(todoItemsFromDB);
     }
@@ -100,7 +100,7 @@ app.delete("/delete_item/:id", async(req, res) => {
     try{
     const todoItemsFromDB = await TodoItem.findByIdAndDelete(req.params.id, {new: true});
     if(!todoItemsFromDB){
-        res.status(404).json({message:"error in fetching from db"})
+        res.status(404).json({message:"item not found"})
     } else{
         res.status(200).json({message:"Item Deleted"})
     }
