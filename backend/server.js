@@ -3,7 +3,6 @@ const mongoose = require("mongoose");
 const TodoItem = require("./Schema/todolist");
 const app = express();
 const cors = require("cors");
-const todolist = require("./Schema/todolist");
 
 require("dotenv").config();
 app.use(cors());

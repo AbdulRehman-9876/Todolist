@@ -23,16 +23,16 @@ const getSIngleItem = async (id) => {
 
 const createItem = async () => {
  try {
-    const response = await axious.post(BASE_URL + "add_items");
+    const response = await axios.post(BASE_URL + "add_items");
     return response.data;
  } catch(err){
     console.log(err);
  }
 }
 
-const deleteAllItems = async() => {
+const deleteItem = async() => {
     try{
-        const response = await axious.delete(BASE_URL+"delete_item");
+        const response = await axios.delete(BASE_URL+"delete_item");
         return response.data;
     }catch(err){
         console.log(err);
@@ -41,7 +41,7 @@ const deleteAllItems = async() => {
 
 const updateDescription = async(id) => {
     try {
-        const respose = await axious.put(BASE_URL+`update_itemDescription/${id}`);
+        const response = await axios.put(BASE_URL+`update_itemDescription/${id}`);
         return response.data;
     } catch(err){
         console.log(err)
@@ -50,7 +50,7 @@ const updateDescription = async(id) => {
 
 const updateIsCompleted = async(id) => {
     try{
-        const reponse = await axious.put(BASE_URL+`update_itemIsCompleted/${id}`);
+        const response = await axios.put(BASE_URL+`update_itemIsCompleted/${id}`);
         return response.data;
     } catch(err){
         console.log(err);
@@ -58,13 +58,11 @@ const updateIsCompleted = async(id) => {
 }
  
 
-const TodoListApis = {
+export {
 getAllItems,
 getSIngleItem,
 createItem,
-deleteAllItems,
+deleteItem,
 updateDescription,
 updateIsCompleted
 }
-
-export default TodoListApis;

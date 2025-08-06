@@ -1,19 +1,16 @@
 import Todolist from "./Components/TodoList";
 import Input from "./Components/Input";
-import Container from '@mui/material/Container';
-import Box from '@mui/material/Box';
+import Container from "@mui/material/Container";
+import CompletedTask from "./Components/CompletedTask";
 
 function App() {
   return (
     <>
-    <Box>
-
-     <Container maxWidth="lg">
-      <Todolist/>
+      <Container maxWidth="lg">
+        <Todolist />
         <Input />
-     </Container>
-    </Box>
-
+        <CompletedTask />
+      </Container>
     </>
   );
 }

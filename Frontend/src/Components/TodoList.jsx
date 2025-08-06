@@ -5,7 +5,7 @@ export default function TodoList() {
   return (
     <>
      <Typography variant="h5" mb={2} mt={5} ml={50}>
-        Todolist Appliation
+        Todo list Appliation
       </Typography>
     </>
   )
