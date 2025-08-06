@@ -29,8 +29,8 @@ export default function CompletedTask() {
     <>
      {data.length > 0 ? (
   data.map((item) => (
-    <Box key={item._id} mb={2} p={2} border={1} borderRadius={1}>
-      <Typography variant="h6">{item.description}</Typography>
+    <Box key={item._id} mb={2} p={2} border={1} borderRadius={3}>
+      <Typography variant="h10">{item.description}</Typography>
     </Box>
   ))
 ) : (
