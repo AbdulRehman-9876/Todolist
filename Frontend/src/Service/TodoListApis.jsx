@@ -1,19 +1,21 @@
 import axios from "axios";
 
-const BASE_URL = "http://localhost:5000/";
+
+const BASE_URL = "http://localhost:3002/";
 
 const getAllItems = async () => {
   try {
     const response = await axios.get(BASE_URL + "get_items");
     return response.data;
   } catch (err) {
-    console.log(err);
+    console.log("Error in fetching data from database (frontend) " + err);
+    return [];
   }
 };
 
 const getSIngleItem = async (id) => {
     try{
-    const response = await axios.get(BASE_URL + `/get_item/${id}`);
+    const response = await axios.get(BASE_URL + `get_item/${id}`);
     return response.data;
     } catch(err){
         console.log(err);
@@ -21,9 +23,9 @@ const getSIngleItem = async (id) => {
    
 }
 
-const createItem = async () => {
+const createItem = async (description) => {
  try {
-    const response = await axios.post(BASE_URL + "add_items");
+    const response = await axios.post(BASE_URL + "add_items", description);
     return response.data;
  } catch(err){
     console.log(err);

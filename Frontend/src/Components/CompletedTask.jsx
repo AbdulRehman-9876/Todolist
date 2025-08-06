@@ -4,10 +4,10 @@ import { useEffect } from "react";
 import Box from '@mui/material/Box';
 
 import {
-  getAllItems,
-  deleteItem,
-  updateDescription,
-  updateIsCompleted,
+  getAllItems
+  // deleteItem,
+  // updateDescription,
+  // updateIsCompleted,
 } from "../Service/TodoListApis";
 
 export default function CompletedTask() {
@@ -15,10 +15,11 @@ export default function CompletedTask() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await getAllItems();
-        setData(data);
+        const FetchedData = await getAllItems();
+        console.log(FetchedData);
+        setData(FetchedData);
       } catch (err) {
-        console.log(err);
+        console.log("Issue in fetching data from from frontend, " +   err);
       }
     };
 
