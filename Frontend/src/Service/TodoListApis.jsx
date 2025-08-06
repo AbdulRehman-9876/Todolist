@@ -25,7 +25,7 @@ const getSIngleItem = async (id) => {
 
 const createItem = async (description) => {
  try {
-    const response = await axios.post(BASE_URL + "add_items", description);
+    const response = await axios.post(BASE_URL + "add_items", {description});
     return response.data;
  } catch(err){
     console.log(err);
