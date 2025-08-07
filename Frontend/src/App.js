@@ -3,6 +3,7 @@ import Input from "./Components/Input";
 import Container from "@mui/material/Container";
 import CompletedTask from "./Components/CompletedTask";
 
+
 function App() {
   return (
     <>
@@ -10,6 +11,7 @@ function App() {
         <Todolist />
         <Input />
         <CompletedTask />
+        
       </Container>
     </>
   );
