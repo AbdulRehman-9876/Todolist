@@ -34,9 +34,17 @@ export default function CompletedTask() {
     }
   }, [shouldReload]);
 
+  const incompleteTasks = data.filter((item) => !item.isCompleted);
+  const completedTasks = data.filter((item) => item.isCompleted);
+
   return (
     <>
-      {data.length > 0 ? (
+
+      <Typography variant="h6" sx={{ mt: 4, mb: 2 }}>
+        Pending Tasks
+      </Typography>
+
+      {incompleteTasks.length > 0 ? (
         data.map((item) => (
           <Box
             style={{
@@ -60,10 +68,44 @@ export default function CompletedTask() {
               >
                 Done
               </Button>
+              <EditButton id={item._id} /> {/*edit button*/}
+              <DeleteButton id={item._id} /> {/*delete button*/}
+            </div>
+          </Box>
+        ))
+      ) : (
+        <Typography>No data in database</Typography>
+      )}
 
-              <EditButton id={item._id} />
-
-              <DeleteButton id={item._id} />
+      <Typography variant="h6" sx={{ mt: 4, mb: 2 }}>
+        Completed Tasks
+      </Typography>
+      {completedTasks.length > 0 ? (
+        data.map((item) => (
+          <Box
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+            }}
+            key={item._id}
+            mb={2}
+            p={1.7}
+            border={1}
+            borderRadius={3}
+          >
+            <Typography variant="h10">{item.description}</Typography>
+            <div style={{ justifyContent: "end" }}>
+              <Button
+                variant="outlined"
+                color="success"
+                startIcon={<DoneIcon />}
+                style={{ marginRight: 10 }}
+              >
+                Done
+              </Button>
+              <EditButton id={item._id} /> {/*edit button*/}
+              <DeleteButton id={item._id} /> {/*delete button*/}
             </div>
           </Box>
         ))

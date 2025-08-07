@@ -7,7 +7,7 @@ import Button from "@mui/material/Button";
 export default function DeleteButton(prop) {
   const { setShouldReload } = useContext(ReloadContext);
   const deleteTodoList = async () => {
-    try {
+    try { 
       const deletedItem = await deleteItem(prop.id);
       console.log("Deletion Successful", deletedItem);
       setShouldReload(true);
