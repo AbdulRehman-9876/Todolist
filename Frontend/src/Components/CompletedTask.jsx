@@ -6,7 +6,8 @@ import Button from "@mui/material/Button";
 import DeleteIcon from "@mui/icons-material/Delete";
 import UpdateIcon from "@mui/icons-material/Update";
 import DoneIcon from "@mui/icons-material/Done";
-
+import { useContext } from 'react';
+import { ReloadContext } from './ReloadContext';
 
 import {
   getAllItems,
@@ -16,6 +17,7 @@ import {
 } from "../Service/TodoListApis";
 
 export default function CompletedTask() {
+  const { shouldReload, setShouldReload } = useContext(ReloadContext);
   const [data, setData] = useState([]);
   useEffect(() => {
     const fetchData = async () => {
@@ -23,13 +25,16 @@ export default function CompletedTask() {
         const FetchedData = await getAllItems();
         console.log(FetchedData);
         setData(FetchedData);
+        setShouldReload(false); // reset after fetching
       } catch (err) {
         console.log("Issue in fetching data from from frontend, " + err);
       }
     };
 
+     if (shouldReload) {
     fetchData();
-  }, []);
+  }
+  }, [[shouldReload]]);
 
   return (
     <>

@@ -2,16 +2,20 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import {createItem} from "../Service/TodoListApis";
 import { useEffect, useState } from "react";
-import CompletedTask from "../Components/CompletedTask";
+import { ReloadContext } from "./ReloadContext";
+import { useContext } from 'react';
 
 export default function Input() {
 
+const { setShouldReload } = useContext(ReloadContext);
 const [onSubmit, setOnSubmit] = useState(false);
 const [description, setDescription] = useState("");
+
   const createTodoList = async () => {
         try {
             const data = await createItem(description);
             setOnSubmit(true)
+            setShouldReload(true);
         } catch (err) {
             console.log(`Error in creating new record, ${err}`);
         }
