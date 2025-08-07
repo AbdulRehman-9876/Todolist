@@ -3,22 +3,23 @@ import { useState } from "react";
 import { useEffect } from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import UpdateIcon from "@mui/icons-material/Update";
 import DoneIcon from "@mui/icons-material/Done";
-import { useContext } from 'react';
-import { ReloadContext } from './ReloadContext';
+import { useContext } from "react";
+import { ReloadContext } from "./ReloadContext";
 import DeleteButton from "./DeleteButton";
+import EditButton from "./EditButton";
 
 import {
   getAllItems,
-  // deleteItem,
-  // updateDescription,
+  // deleteItem (done),
+  // updateDescription (done),
   // updateIsCompleted,
 } from "../Service/TodoListApis";
 
 export default function CompletedTask() {
   const { shouldReload, setShouldReload } = useContext(ReloadContext);
   const [data, setData] = useState([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -32,10 +33,10 @@ export default function CompletedTask() {
       }
     };
 
-     if (shouldReload) {
-    fetchData();
-  }
-  }, [[shouldReload]]);
+    if (shouldReload) {
+      fetchData();
+    }
+  }, [shouldReload]);
 
   return (
     <>
@@ -55,24 +56,18 @@ export default function CompletedTask() {
           >
             <Typography variant="h10">{item.description}</Typography>
             <div style={{ justifyContent: "end" }}>
-                <Button
+              <Button
                 variant="outlined"
                 color="success"
                 startIcon={<DoneIcon />}
                 style={{ marginRight: 10 }}
               >
                 Done
-              </Button> 
-              <Button
-                variant="outlined"
-                color="secondary"
-                startIcon={<UpdateIcon />}
-              >
-                Update
               </Button>
-              <DeleteButton id ={item._id}/>
-              
-            
+
+              <EditButton id={item._id} />
+
+              <DeleteButton id={item._id} />
             </div>
           </Box>
         ))

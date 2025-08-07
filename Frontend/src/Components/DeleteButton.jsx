@@ -4,12 +4,11 @@ import { useContext } from "react";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Button from "@mui/material/Button";
 
-export default function DeleteButton(id) {
+export default function DeleteButton(prop) {
   const { setShouldReload } = useContext(ReloadContext);
   const deleteTodoList = async () => {
     try {
-      console.log(typeof id, id);
-      const deletedItem = await deleteItem(id.id);
+      const deletedItem = await deleteItem(prop.id);
       console.log("Deletion Successful", deletedItem);
       setShouldReload(true);
     } catch (err) {

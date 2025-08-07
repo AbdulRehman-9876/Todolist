@@ -46,6 +46,7 @@ app.put("/update_itemDescription/:id", async (req, res) => {
             res.status(404).json({message:"item not found"});
         } else {
             todoItemsFromDB.description = description;
+            todoItemsFromDB.save();
             res.status(200).json({message:"updated successfully"});
         }
     }catch(err){
@@ -60,6 +61,7 @@ app.put("/update_itemIsCompleted/:id", async(req, res)=>{
             res.status(404).json({message:"item not found"})
         } else {
             todoItemsFromDB.isCompleted = !todoItemsFromDB;
+            todoItemsFromDB.save();
             res.status(200).json({message:"updated successfully"})
         }
     }catch(err){
