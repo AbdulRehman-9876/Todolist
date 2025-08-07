@@ -8,7 +8,7 @@ export default function DeleteButton(prop) {
   const { setShouldReload } = useContext(ReloadContext);
   const deleteTodoList = async () => {
     try { 
-      const deletedItem = await deleteItem(prop.id);
+      const deletedItem = await deleteItem(prop.id, prop.isCompleted);
       console.log("Deletion Successful", deletedItem);
       setShouldReload(true);
     } catch (err) {

@@ -32,10 +32,10 @@ const createItem = async (description) => {
  }
 }
 
-const deleteItem = async(id) => {
+const deleteItem = async(id, isCompleted) => {
     try{
         console.log("ID insie delete item func: ", typeof(id), id);
-        const response = await axios.delete(BASE_URL+`delete_item/${id}`);
+        const response = await axios.delete(BASE_URL+`delete_item/${id}/${isCompleted}`);
         return response.data;
     }catch(err){
         console.log(err);

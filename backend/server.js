@@ -60,7 +60,8 @@ app.put("/update_itemIsCompleted/:id", async(req, res)=>{
         if(!todoItemsFromDB){
             res.status(404).json({message:"item not found"})
         } else {
-            todoItemsFromDB.isCompleted = !todoItemsFromDB;
+            console.log(todoItemsFromDB.id)
+            todoItemsFromDB.isCompleted = !todoItemsFromDB.isCompleted;
             todoItemsFromDB.save();
             res.status(200).json({message:"updated successfully"})
         }
@@ -97,15 +98,21 @@ app.get("/get_item/:id", async(req, res) => {
     }
 });
 //delete single item
-app.delete("/delete_item/:id", async(req, res) => {
-    try{
-    const todoItemsFromDB = await TodoItem.findByIdAndDelete(req.params.id, {new: true});
-    if(!todoItemsFromDB){
-        res.status(404).json({message:"item not found"})
-    } else{
-        res.status(200).json({message:"Item Deleted"})
+app.delete("/delete_item/:id/:isCompleted", async (req, res) => {
+  try {
+    const { id, isCompleted } = req.params;
+
+    const todoItemsFromDB = await TodoItem.findOneAndDelete({
+      _id: id,
+      isCompleted: isCompleted === 'true', // convert to boolean
+    });
+
+    if (!todoItemsFromDB) {
+      return res.status(404).json({ message: "Item not found" });
     }
-    } catch(err){
-        res.status(400).json({message:"error in deleting item"});
-    }
+
+    res.status(200).json({ message: "Item deleted" });
+  } catch (err) {
+    res.status(400).json({ message: "Error in deleting item" });
+  }
 });

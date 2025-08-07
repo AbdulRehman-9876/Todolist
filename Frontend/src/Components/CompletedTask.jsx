@@ -1,18 +1,13 @@
 import Typography from "@mui/material/Typography";
-import { useState } from "react";
-import { useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import DoneIcon from "@mui/icons-material/Done";
-import { useContext } from "react";
+import CloseIcon from "@mui/icons-material/Close";
 import { ReloadContext } from "./ReloadContext";
 import DeleteButton from "./DeleteButton";
 import EditButton from "./EditButton";
-
-import {
-  getAllItems,
-  // updateIsCompleted,
-} from "../Service/TodoListApis";
+import { getAllItems } from "../Service/TodoListApis";
+import DoneTaskButton from "./DoneTaskButton";
 
 export default function CompletedTask() {
   const { shouldReload, setShouldReload } = useContext(ReloadContext);
@@ -39,7 +34,6 @@ export default function CompletedTask() {
 
   return (
     <>
-
       <Typography variant="h6" sx={{ mt: 4, mb: 2 }}>
         Pending Tasks
       </Typography>
@@ -60,16 +54,9 @@ export default function CompletedTask() {
           >
             <Typography variant="h10">{item.description}</Typography>
             <div style={{ justifyContent: "end" }}>
-              <Button
-                variant="outlined"
-                color="success"
-                startIcon={<DoneIcon />}
-                style={{ marginRight: 10 }}
-              >
-                Done
-              </Button>
+              <DoneTaskButton id={item._id}/> {/*Done button*/}
               <EditButton id={item._id} /> {/*edit button*/}
-              <DeleteButton id={item._id} /> {/*delete button*/}
+              <DeleteButton id={item._id} isCompleted = {item.isCompleted} /> {/*delete button*/}
             </div>
           </Box>
         ))
@@ -99,13 +86,13 @@ export default function CompletedTask() {
               <Button
                 variant="outlined"
                 color="success"
-                startIcon={<DoneIcon />}
+                startIcon={<CloseIcon />}
                 style={{ marginRight: 10 }}
               >
-                Done
+                Not Done
               </Button>
               <EditButton id={item._id} /> {/*edit button*/}
-              <DeleteButton id={item._id} /> {/*delete button*/}
+              <DeleteButton id={item._id} isCompleted = {item.isCompleted} /> {/*delete button*/}
             </div>
           </Box>
         ))
