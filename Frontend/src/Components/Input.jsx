@@ -1,7 +1,7 @@
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import {createItem} from "../Service/TodoListApis";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 export default function Input() {
 
 const [onSubmit, setOnSubmit] = useState(false);
@@ -15,6 +15,11 @@ const [description, setDescription] = useState("");
         }
         setOnSubmit(false)
     }
+
+    useEffect(()=>{
+
+
+    },[onSubmit])
       
   const handleChange = (event) => {
     setDescription(event.target.value);
