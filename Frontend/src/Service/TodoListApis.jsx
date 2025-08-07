@@ -42,9 +42,9 @@ const deleteItem = async(id) => {
     }
 }
 
-const updateDescription = async(id) => {
+const updateDescription = async(id, description) => {
     try {
-        const response = await axios.put(BASE_URL+`update_itemDescription/${id}`);
+        const response = await axios.put(BASE_URL+`update_itemDescription/${id}`, {description});
         return response.data;
     } catch(err){
         console.log(err)

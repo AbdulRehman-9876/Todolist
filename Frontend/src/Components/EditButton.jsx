@@ -6,16 +6,19 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import UpdateIcon from "@mui/icons-material/Update";
+import { useState } from "react";
 
 import {updateDescription} from "../Service/TodoListApis";
 
 export default function EditButton(prop) {
   const [open, setOpen] = React.useState(false);
+  const [description, setDescription] = useState("");
 
   const editDescriptionApi = async() => {
     try{
-                console.log("edit button id is: ",prop.id);
-        const updatedData = await updateDescription(prop.id);
+       console.log("edit button id is: ",prop.id);
+       console.log("Description", description);
+        const updatedData = await updateDescription(prop.id, description);
         console.log("Description Updated Successfully", updatedData)
     } catch(err){
         console.log("Error in edit button ", err)
@@ -36,6 +39,10 @@ export default function EditButton(prop) {
     const email = formJson.email;
     console.log(email);
     handleClose();
+  };
+
+    const handleChange = (event) => {
+    setDescription(event.target.value);
   };
 
   return (
@@ -63,12 +70,13 @@ export default function EditButton(prop) {
                 type="text"
                 fullWidth
                 variant="standard"
+                onChange={handleChange}
               />
             </form>
           </DialogContent>
           <DialogActions>
             <Button onClick={handleClose}>Cancel</Button>
-            <Button type="submit" form="subscription-form" onClick={editDescriptionApi}>
+            <Button type="submit" form="subscription-form" onClick={editDescriptionApi} >
               Done
             </Button>
           </DialogActions>
