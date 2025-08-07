@@ -8,18 +8,15 @@ import { useContext } from 'react';
 export default function Input() {
 
 const { setShouldReload } = useContext(ReloadContext);
-const [onSubmit, setOnSubmit] = useState(false);
 const [description, setDescription] = useState("");
 
   const createTodoList = async () => {
         try {
-            const data = await createItem(description);
-            setOnSubmit(true)
+            await createItem(description);
             setShouldReload(true);
         } catch (err) {
             console.log(`Error in creating new record, ${err}`);
         }
-        setOnSubmit(false)
     }
       
   const handleChange = (event) => {

@@ -7,18 +7,19 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import UpdateIcon from "@mui/icons-material/Update";
 import { useState } from "react";
-
+import { ReloadContext } from "./ReloadContext";
+import { useContext } from 'react';
 import {updateDescription} from "../Service/TodoListApis";
 
 export default function EditButton(prop) {
   const [open, setOpen] = React.useState(false);
   const [description, setDescription] = useState("");
+  const { setShouldReload } = useContext(ReloadContext);
 
   const editDescriptionApi = async() => {
     try{
-       console.log("edit button id is: ",prop.id);
-       console.log("Description", description);
-        const updatedData = await updateDescription(prop.id, description);
+       const updatedData = await updateDescription(prop.id, description);
+       setShouldReload(true);
         console.log("Description Updated Successfully", updatedData)
     } catch(err){
         console.log("Error in edit button ", err)
@@ -34,10 +35,6 @@ export default function EditButton(prop) {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    const formData = new FormData(event.currentTarget);
-    const formJson = Object.fromEntries(formData.entries());
-    const email = formJson.email;
-    console.log(email);
     handleClose();
   };
 

@@ -11,21 +11,17 @@ import EditButton from "./EditButton";
 
 import {
   getAllItems,
-  // deleteItem (done),
-  // updateDescription (done),
   // updateIsCompleted,
 } from "../Service/TodoListApis";
 
 export default function CompletedTask() {
   const { shouldReload, setShouldReload } = useContext(ReloadContext);
   const [data, setData] = useState([]);
-  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const FetchedData = await getAllItems();
-        console.log(FetchedData);
         setData(FetchedData);
         setShouldReload(false); // reset after fetching
       } catch (err) {
