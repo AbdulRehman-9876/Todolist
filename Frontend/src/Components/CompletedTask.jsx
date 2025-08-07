@@ -3,11 +3,11 @@ import { useState } from "react";
 import { useEffect } from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import DeleteIcon from "@mui/icons-material/Delete";
 import UpdateIcon from "@mui/icons-material/Update";
 import DoneIcon from "@mui/icons-material/Done";
 import { useContext } from 'react';
 import { ReloadContext } from './ReloadContext';
+import DeleteButton from "./DeleteButton";
 
 import {
   getAllItems,
@@ -19,6 +19,7 @@ import {
 export default function CompletedTask() {
   const { shouldReload, setShouldReload } = useContext(ReloadContext);
   const [data, setData] = useState([]);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -69,14 +70,8 @@ export default function CompletedTask() {
               >
                 Update
               </Button>
-              <Button
-                variant="outlined"
-                color="error"
-                startIcon={<DeleteIcon />}
-                style={{ marginLeft: 10 }}
-              >
-                Delete
-              </Button>
+              <DeleteButton id ={item._id}/>
+              
             
             </div>
           </Box>

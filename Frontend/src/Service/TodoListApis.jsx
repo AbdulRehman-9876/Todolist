@@ -32,9 +32,10 @@ const createItem = async (description) => {
  }
 }
 
-const deleteItem = async() => {
+const deleteItem = async(id) => {
     try{
-        const response = await axios.delete(BASE_URL+"delete_item");
+        console.log("ID insie delete item func: ", typeof(id), id);
+        const response = await axios.delete(BASE_URL+`delete_item/${id}`);
         return response.data;
     }catch(err){
         console.log(err);
