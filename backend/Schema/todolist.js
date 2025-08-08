@@ -8,6 +8,9 @@ const todolistSchema = new mongoose.Schema({
         type: Boolean,
         required: true,
         default: false
+    }, userId: { // so each user can get their own specific todolist
+        type: String,
+        required: false,
     }
 });
 module.exports = mongoose.model('todolist',todolistSchema); 
