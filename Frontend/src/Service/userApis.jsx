@@ -1,7 +1,7 @@
 import axios from "axios";
 
 
-const BASE_URL = "http://localhost:3003/";
+const BASE_URL = "http://localhost:3003";
 
 const createUser = async(name, email, password) => {
     try{

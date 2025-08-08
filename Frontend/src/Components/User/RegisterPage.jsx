@@ -1,29 +1,98 @@
-import React from "react";
 import TextField from "@mui/material/TextField";
 import Stack from "@mui/material/Stack";
-import Typography from "@mui/material/Typography";
+import Typography, { typographyClasses } from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
+import { Link } from "react-router-dom";
+import { useState } from "react";
+
+import { createUser } from "../../Service/userApis";
 
 export default function RegisterPage() {
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
+
+  // Update state based on ID
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.id]: e.target.value,
+    });
+  };
+
+  const handleSubmit = async () => {
+    if (formData.password !== formData.confirmPassword) {
+      alert("Passwords do not match!");
+      return;
+    }
+    try{
+      const response = await createUser(formData.name,formData.email,formData.password);
+      return response.data;
+    }catch(err){
+      console.log(`error while inserting data `, err);
+    }
+  };
   return (
     <>
-    <Container maxWidth="sm">
-
-   
-    <Typography sx={{mt:15, mb:3 ,ml:20}} variant="h5" >
-      Registeration Page
-    </Typography>
-    <Stack spacing={4}>
-
-        <TextField id="name_id" label="Enter Name" variant="filled"/>
-        <TextField id="email_id" label="Enter Email" variant="filled" type="email" />
-        <TextField id="password_id" label="Enter Password" variant="filled" />
-        <TextField id="confirm_password_id" label="Confirm Password" variant="filled" />
-     </Stack>
-     <Button color="success" variant="contained" sx={{ml: 28, mt:3}}>
-      Register
-     </Button>
+      <Container maxWidth="sm">
+        <Typography sx={{ mt: 15, mb: 3, ml: 20 }} variant="h5">
+          Registeration Page
+        </Typography>
+        <Stack spacing={4}>
+          <TextField
+            id="name"
+            label="Enter Name"
+            variant="standard"
+            value={formData.name}
+            onChange={handleChange}
+          />
+          <TextField
+            id="email"
+            label="Enter Email"
+            variant="standard"
+            type="email"
+            value={formData.email}
+            onChange={handleChange}
+          />
+          <TextField
+            id="password"
+            label="Enter Password"
+            variant="standard"
+            type="password"
+            value={formData.password}
+            onChange={handleChange}
+          />
+          <TextField
+            id="confirmPassword"
+            label="Confirm Password"
+            variant="standard"
+            type="password"
+            value={formData.confirmPassword}
+            onChange={handleChange}
+          />
+        </Stack>
+        <p>
+          Click here to{" "}
+          <Link
+            to="/login"
+            style={{ textDecoration: "underline", color: "blue" }}
+          >
+            login
+          </Link>
+          .
+        </p>
+        <Button
+          color="success"
+          variant="contained"
+          sx={{ ml: 28, mt: 3 }}
+          onClick={handleSubmit}
+        >
+          Register
+        </Button>
       </Container>
     </>
   );
