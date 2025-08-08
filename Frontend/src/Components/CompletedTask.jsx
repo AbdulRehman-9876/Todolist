@@ -91,7 +91,7 @@ export default function CompletedTask() {
               >
                 Not Done
               </Button>
-              <EditButton id={item._id} /> {/*edit button*/}
+              <EditButton id={item._id} desc={item.description} /> {/*edit button*/}
               <DeleteButton id={item._id} isCompleted = {item.isCompleted} /> {/*delete button*/}
             </div>
           </Box>

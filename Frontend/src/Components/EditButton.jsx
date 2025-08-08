@@ -8,17 +8,37 @@ import DialogTitle from "@mui/material/DialogTitle";
 import UpdateIcon from "@mui/icons-material/Update";
 import { useState } from "react";
 import { ReloadContext } from "./ReloadContext";
-import { useContext } from 'react';
-import {updateDescription} from "../Service/TodoListApis";
+import { useContext, useEffect} from 'react';
+import {updateDescription, getSIngleItem} from "../Service/TodoListApis";
 
 export default function EditButton(prop) {
   const [open, setOpen] = React.useState(false);
-  const [description, setDescription] = useState("");
+  const [labelText, setLabelText] = useState('');
   const { setShouldReload } = useContext(ReloadContext);
+
+  const fetchDescriptionApi = async() =>{
+    try{
+       const fetchDesc = await getSIngleItem(prop.id);
+       console.log(fetchDesc.description);
+       return fetchDesc.description;
+    }catch(err){
+      console.log("Errr in getting Api for description (frontend) ", err);
+      return [];
+    
+    }
+  }
+   useEffect(() => {
+    const fetchData = async () => {
+      const description = await fetchDescriptionApi();
+      setLabelText(description);
+    };
+
+    fetchData();
+  }, [prop.id]); // refetch if prop.id changes
 
   const editDescriptionApi = async() => {
     try{
-       const updatedData = await updateDescription(prop.id, description);
+       const updatedData = await updateDescription(prop.id, labelText);
        setShouldReload(true);
         console.log("Description Updated Successfully", updatedData)
     } catch(err){
@@ -39,7 +59,7 @@ export default function EditButton(prop) {
   };
 
     const handleChange = (event) => {
-    setDescription(event.target.value);
+    setLabelText(event.target.value);
   };
 
   return (
@@ -63,7 +83,7 @@ export default function EditButton(prop) {
                 margin="dense"
                 id="name"
                 name="text"
-                label="Enter here"
+                value={labelText}
                 type="text"
                 fullWidth
                 variant="standard"
