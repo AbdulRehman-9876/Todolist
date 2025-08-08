@@ -22,6 +22,8 @@ export default function CompletedTask() {
       } catch (err) {
         console.log("Issue in fetching data from from frontend, " + err);
       }
+      console.log("Complete Task: ", completedTasks);
+      console.log("Incomplete Task: ", incompleteTasks);
     };
 
     if (shouldReload) {
@@ -39,7 +41,7 @@ export default function CompletedTask() {
       </Typography>
 
       {incompleteTasks.length > 0 ? (
-        data.map((item) => (
+        incompleteTasks.map((item) => (
           <Box
             style={{
               display: "flex",
@@ -68,7 +70,7 @@ export default function CompletedTask() {
         Completed Tasks
       </Typography>
       {completedTasks.length > 0 ? (
-        data.map((item) => (
+        completedTasks.map((item) => (
           <Box
             style={{
               display: "flex",

@@ -19,7 +19,6 @@ export default function EditButton(prop) {
   const fetchDescriptionApi = async() =>{
     try{
        const fetchDesc = await getSIngleItem(prop.id);
-       console.log(fetchDesc.description);
        return fetchDesc.description;
     }catch(err){
       console.log("Errr in getting Api for description (frontend) ", err);
