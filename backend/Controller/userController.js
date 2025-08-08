@@ -33,34 +33,35 @@ const deleteUser = async (req, res) => {
 
 //Get user details from database
 const getUserDetails = async (req, res) => {
-  try {  
-    const {id} = req.params;
+  try {
+    const { id } = req.params;
     const fetchUserDetails = await UserSchema.findById(id);
     res.status(200).json(fetchUserDetails);
-  } catch (err) {res.status(404).json({message:`Error in finding user: ${err}`})}
+  } catch (err) {
+    res.status(404).json({ message: `Error in finding user: ${err}` });
+  }
 };
 //function to check valid user and password
 const checkLoginCredentials = async (req, res) => {
-  try{
-    const {email, pass} = req.body;
-    const fetchUserDetails = await UserSchema.findOne({email});
-    if(!fetchUserDetails){
-      res.status(404).json({message:"user not found"})
-    } else if(fetchUserDetails.password != pass){
-      console.log(pass);
-      console.log(fetchUserDetails.password);
-
-      res.status(404).json({message:"wrong password"})
+  try {
+    const { email, password } = req.body;
+    const fetchUserDetails = await UserSchema.findOne({ email });
+    if (!fetchUserDetails) {
+       res.status(400).json({ message: "user not found" });
+    } else if (fetchUserDetails.password != password) {
+       res.status(400).json({ message: "wrong password" });
+    } else {
+       console.log("User is authenticated")
+       res.status(200).json({ message: "User is authenticated" }); //works in case user provided valid email and password
     }
-    res.status(200).json({message:"User is authenticated"}); //works in case user provided valid email and password
-  }catch(err){
+  } catch (err) {
     console.log(`Error while checking credentials ${err}`);
   }
-}
+};
 
 module.exports = {
   addUser,
   deleteUser,
   getUserDetails,
-  checkLoginCredentials
-}
+  checkLoginCredentials,
+};

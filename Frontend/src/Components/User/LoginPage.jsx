@@ -1,10 +1,11 @@
 import TextField from "@mui/material/TextField";
 import Stack from "@mui/material/Stack";
-import Typography, { typographyClasses } from "@mui/material/Typography";
+import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import { checkLoginCredentials } from "../../Service/userApis";
 
 export default function LoginPage() {
   const [formData, setFormData] = useState({
@@ -19,7 +20,15 @@ export default function LoginPage() {
       [e.target.id]: e.target.value,
     });
   };
-  const handleSubmit = async () => {};
+  const handleSubmit = async () => {
+    try{
+      // console.log(formData.email, formData.password);
+      const response = await checkLoginCredentials(formData.email,formData.password);
+      return response.data;
+    }catch(err){
+      console.log("Error in handelSubmit ", err)
+    }
+  };
 
   return (
     <>

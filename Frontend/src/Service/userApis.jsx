@@ -1,9 +1,9 @@
 import axios from "axios";
 
-
 const BASE_URL = "http://localhost:3003";
 
 const createUser = async(name, email, password) => {
+
     try{
         const response = await axios.post(`${BASE_URL}/user/addUser`,{name,email,password})
         return response.data;
@@ -29,7 +29,7 @@ const deleteUser = async(id) => {
 }
 const checkLoginCredentials = async(email, password) =>{
     try{
-        const response = await axios.get(`${BASE_URL}/user/checkLoginCredentials`,{email,password})
+        const response = await axios.post(`${BASE_URL}/user/checkLoginCredentials`,{email,password})
         return response.data;
     } catch(err){
         console.log(`error in checking user details`, err)
