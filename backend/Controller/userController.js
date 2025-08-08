@@ -1,5 +1,6 @@
 const UserSchema = require("../Schema/user");
 
+//Add user (register)
 const addUser = async (req, res) => {
   try {
     const { name, email, pass } = req.body;
@@ -15,7 +16,7 @@ const addUser = async (req, res) => {
     res.status(404).json({ message: `Error in adding user: ${err}` });
   }
 };
-
+//Delete User from database
 const deleteUser = async (req, res) => {
   try {
     const { userID } = req.params;
@@ -30,9 +31,16 @@ const deleteUser = async (req, res) => {
   }
 };
 
+//Get username from database
 const getUserName = async (req, res) => {
   try {
     const fetchUserDetails = await UserSchema.findById(userID);
     res.json(200).json({ message: "Name successfully fetched" }, fetchUserDetails.name);
   } catch (err) {res.json(404).json({message:`Error in finding user: ${err}`})}
 };
+
+module.exports = {
+  addUser,
+  deleteUser,
+  getUserName
+}
