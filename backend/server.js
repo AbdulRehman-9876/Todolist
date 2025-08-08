@@ -60,7 +60,6 @@ app.put("/update_itemIsCompleted/:id", async(req, res)=>{
         if(!todoItemsFromDB){
             res.status(404).json({message:"item not found"})
         } else {
-            console.log(todoItemsFromDB.id)
             todoItemsFromDB.isCompleted = !todoItemsFromDB.isCompleted;
             todoItemsFromDB.save();
             res.status(200).json({message:"updated successfully"})

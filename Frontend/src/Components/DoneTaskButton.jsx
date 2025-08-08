@@ -20,7 +20,7 @@ export default function DoneTaskButton(prop) {
         style={{ marginRight: 10 }}
         onClick={handleTaskAPI}
       >
-        Done
+        {prop.task}
       </Button>
     </>
   );

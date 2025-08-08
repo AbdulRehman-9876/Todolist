@@ -29,8 +29,8 @@ export default function CompletedTask() {
     }
   }, [shouldReload]);
 
-  const incompleteTasks = data.filter((item) => !item.isCompleted);
-  const completedTasks = data.filter((item) => item.isCompleted);
+  const incompleteTasks = data.filter((item) => item.isCompleted == false);
+  const completedTasks = data.filter((item) => item.isCompleted == true);
 
   return (
     <>
@@ -54,8 +54,8 @@ export default function CompletedTask() {
           >
             <Typography variant="h10">{item.description}</Typography>
             <div style={{ justifyContent: "end" }}>
-              <DoneTaskButton id={item._id}/> {/*Done button*/}
-              <EditButton id={item._id} /> {/*edit button*/}
+              <DoneTaskButton id={item._id} task={"Done"}/> {/*Done button*/}
+              <EditButton id={item._id} desc={item.description} /> {/*edit button*/}
               <DeleteButton id={item._id} isCompleted = {item.isCompleted} /> {/*delete button*/}
             </div>
           </Box>
@@ -83,15 +83,7 @@ export default function CompletedTask() {
           >
             <Typography variant="h10">{item.description}</Typography>
             <div style={{ justifyContent: "end" }}>
-              <Button
-                variant="outlined"
-                color="success"
-                startIcon={<CloseIcon />}
-                style={{ marginRight: 10 }}
-              >
-                Not Done
-              </Button>
-              <EditButton id={item._id} desc={item.description} /> {/*edit button*/}
+              <DoneTaskButton id={item._id} task={"Not Done"}/> {/*Done button*/}
               <DeleteButton id={item._id} isCompleted = {item.isCompleted} /> {/*delete button*/}
             </div>
           </Box>

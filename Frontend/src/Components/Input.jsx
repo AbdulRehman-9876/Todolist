@@ -35,7 +35,7 @@ const [description, setDescription] = useState("");
             <Button onClick={createTodoList}
                 variant="contained"
                 color="success"
-                sx={{ ml: 130, mt: 2, mb: 3, width: 120 }}
+                sx={{ ml: 129 , mt: 2, mb: 3, width: 120 }}
             >
                 Add Notes
             </Button >
