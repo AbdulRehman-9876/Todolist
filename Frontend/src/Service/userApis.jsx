@@ -24,12 +24,21 @@ const deleteUser = async(id) => {
         const response = await axios.delete(`${BASE_URL}/user/deleteUser/${id}`)
         return response.data;
     }catch(err){
-        console.log(`errr deleting user ${err}`);
+        console.log(`err deleting user ${err}`);
+    }
+}
+const checkLoginCredentials = async(email, password) =>{
+    try{
+        const response = await axios.get(`${BASE_URL}/user/checkLoginCredentials`,{email,password})
+        return response.data;
+    } catch(err){
+        console.log(`error in checking user details`, err)
     }
 }
 
 export{
     createUser,
     getUserData,
-    deleteUser
+    deleteUser,
+    checkLoginCredentials
 }
