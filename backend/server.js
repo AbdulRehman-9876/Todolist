@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const app = express();
 const cors = require("cors");
 const TodoListRoutes = require("./Routes/TodoListRoutes")
+const UserRoutes = require("./Routes/userRoutes")
 
 require("dotenv").config();
 app.use(cors());
@@ -24,3 +25,4 @@ mongoose
   });
 
 app.use("/todos",TodoListRoutes);
+app.use("/user",UserRoutes);

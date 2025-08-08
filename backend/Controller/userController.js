@@ -3,11 +3,11 @@ const UserSchema = require("../Schema/user");
 //Add user (register)
 const addUser = async (req, res) => {
   try {
-    const { name, email, pass } = req.body;
+    const { name, email, password } = req.body;
     const userDetails = new UserSchema({
       name: name,
       email: email,
-      password: pass,
+      password: password,
       dateCreated: Date.now(),
     });
     await userDetails.save();
@@ -19,8 +19,8 @@ const addUser = async (req, res) => {
 //Delete User from database
 const deleteUser = async (req, res) => {
   try {
-    const { userID } = req.params;
-    const deletedUser = await UserSchema.findByIdAndDelete(userID, {
+    const { id } = req.params;
+    const deletedUser = await UserSchema.findByIdAndDelete(id, {
       new: true,
     });
     res
@@ -31,16 +31,18 @@ const deleteUser = async (req, res) => {
   }
 };
 
-//Get username from database
-const getUserName = async (req, res) => {
-  try {
-    const fetchUserDetails = await UserSchema.findById(userID);
-    res.json(200).json({ message: "Name successfully fetched" }, fetchUserDetails.name);
-  } catch (err) {res.json(404).json({message:`Error in finding user: ${err}`})}
+//Get user details from database
+const getUserDetails = async (req, res) => {
+  try {  
+    const {id} = req.params;
+    console.log(id);
+    const fetchUserDetails = await UserSchema.findById(id);
+    res.status(200).json(fetchUserDetails);
+  } catch (err) {res.status(404).json({message:`Error in finding user: ${err}`})}
 };
 
 module.exports = {
   addUser,
   deleteUser,
-  getUserName
+  getUserDetails
 }
