@@ -1,10 +1,10 @@
-const TodoItem = require("../Schema/todolist")
+const TodoItemSchema = require("../Schema/todolist")
 
 //add items
 const addItem = async (req, res) => {
   try {
     const { description } = req.body;
-    const todoItem = new TodoItem({
+    const todoItem = new TodoItemSchema({
       description: description,
       isCompleted: false,
     });
@@ -19,7 +19,7 @@ const addItem = async (req, res) => {
 const updateListDescription = async (req, res) => {
   try {
     const { description } = req.body;
-    const todoItemsFromDB = await TodoItem.findByIdAndUpdate(req.params.id, {
+    const todoItemsFromDB = await TodoItemSchema.findByIdAndUpdate(req.params.id, {
       new: true,
     });
     if (!todoItemsFromDB) {
@@ -37,7 +37,7 @@ const updateListDescription = async (req, res) => {
 //update list isComplete
 const updateIsComplete = async (req, res) => {
   try {
-    const todoItemsFromDB = await TodoItem.findByIdAndUpdate(req.params.id, {
+    const todoItemsFromDB = await TodoItemSchema.findByIdAndUpdate(req.params.id, {
       new: true,
     });
     if (!todoItemsFromDB) {
@@ -55,7 +55,7 @@ const updateIsComplete = async (req, res) => {
 //get all items
 const getAllItems = async (req, res) => {
   try {
-    const todoItemsFromDB = await TodoItem.find();
+    const todoItemsFromDB = await TodoItemSchema.find();
     if (!todoItemsFromDB) {
       return res.status(404).json({ message: "item not found" });
     } else {
@@ -69,7 +69,7 @@ const getAllItems = async (req, res) => {
 //get single item
 const getSingleItem = async (req, res) => {
   try {
-    const todoItemsFromDB = await TodoItem.findById(req.params.id);
+    const todoItemsFromDB = await TodoItemSchema.findById(req.params.id);
     if (!todoItemsFromDB) {
       res.status(404).json({ message: "item not found" });
     } else {
@@ -85,7 +85,7 @@ const deleteItem = async (req, res) => {
   try {
     const { id, isCompleted } = req.params;
 
-    const todoItemsFromDB = await TodoItem.findOneAndDelete({
+    const todoItemsFromDB = await TodoItemSchema.findOneAndDelete({
       _id: id,
       isCompleted: isCompleted === "true", // convert to boolean
     });
