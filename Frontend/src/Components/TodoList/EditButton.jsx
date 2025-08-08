@@ -9,7 +9,7 @@ import UpdateIcon from "@mui/icons-material/Update";
 import { useState } from "react";
 import { ReloadContext } from "./ReloadContext";
 import { useContext, useEffect} from 'react';
-import {updateDescription, getSIngleItem} from "../Service/TodoListApis";
+import {updateDescription, getSIngleItem} from "../../Service/TodoListApis";
 
 export default function EditButton(prop) {
   const [open, setOpen] = React.useState(false);

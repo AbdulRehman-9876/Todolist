@@ -1,6 +1,6 @@
 import DoneIcon from "@mui/icons-material/Done";
 import Button from "@mui/material/Button";
-import { updateIsCompleted } from "../Service/TodoListApis";
+import { updateIsCompleted } from "../../Service/TodoListApis";
 import { ReloadContext } from "./ReloadContext";
 import { useContext } from "react";
 export default function DoneTaskButton(prop) {

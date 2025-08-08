@@ -6,7 +6,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import { ReloadContext } from "./ReloadContext";
 import DeleteButton from "./DeleteButton";
 import EditButton from "./EditButton";
-import { getAllItems } from "../Service/TodoListApis";
+import { getAllItems } from "../../Service/TodoListApis";
 import DoneTaskButton from "./DoneTaskButton";
 
 export default function CompletedTask() {

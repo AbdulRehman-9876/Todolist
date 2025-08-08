@@ -1,4 +1,4 @@
-import { deleteItem } from "../Service/TodoListApis";
+import { deleteItem } from "../../Service/TodoListApis";
 import { ReloadContext } from "./ReloadContext";
 import { useContext } from "react";
 import DeleteIcon from "@mui/icons-material/Delete";

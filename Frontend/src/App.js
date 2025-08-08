@@ -1,22 +1,25 @@
-import Todolist from "./Components/TodoList";
-import Input from "./Components/Input";
+import Todolist from "./Components/TodoList/TodoList";
 import Container from "@mui/material/Container";
-import CompletedTask from "./Components/CompletedTask";
-import { ReloadContext } from "./Components/ReloadContext";
+import { ReloadContext } from "./Components/TodoList/ReloadContext";
+import RegisterPage from "./Components/User/RegisterPage";
 import { useState } from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 function App() {
   const [shouldReload, setShouldReload] = useState(true);
 
   return (
     <>
-        <Container maxWidth="lg">
-          <ReloadContext.Provider value={{ shouldReload, setShouldReload }}>
-            <Todolist />
-            <Input />
-            <CompletedTask />
-          </ReloadContext.Provider>
-        </Container>
+      <Container maxWidth="lg">
+        <ReloadContext.Provider value={{ shouldReload, setShouldReload }}>
+          <BrowserRouter>
+            <Routes>
+              <Route path="/" element={<RegisterPage />}></Route>
+              <Route path="TodoList/" element={<Todolist />}></Route>       
+            </Routes>
+          </BrowserRouter>
+        </ReloadContext.Provider>
+      </Container>
     </>
   );
 }
