@@ -6,8 +6,10 @@ import Container from "@mui/material/Container";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import { checkLoginCredentials } from "../../Service/userApis";
+import { useNavigate } from "react-router-dom";
 
 export default function LoginPage() {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -21,12 +23,16 @@ export default function LoginPage() {
     });
   };
   const handleSubmit = async () => {
-    try{
+    try {
       // console.log(formData.email, formData.password);
-      const response = await checkLoginCredentials(formData.email,formData.password);
+      const response = await checkLoginCredentials(
+        formData.email,
+        formData.password
+      );
+      navigate("/TodoList")
       return response.data;
-    }catch(err){
-      console.log("Error in handelSubmit ", err)
+    } catch (err) {
+      console.log("Error in handelSubmit ", err);
     }
   };
 
@@ -56,10 +62,7 @@ export default function LoginPage() {
         </Stack>
         <p>
           Click here to{" "}
-          <Link
-            to="/"
-            style={{ textDecoration: "underline", color: "blue" }}
-          >
+          <Link to="/" style={{ textDecoration: "underline", color: "blue" }}>
             Register
           </Link>
           .
