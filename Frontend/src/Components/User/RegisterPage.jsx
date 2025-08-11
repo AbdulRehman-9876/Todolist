@@ -26,6 +26,19 @@ export default function RegisterPage() {
   };
 
   const handleSubmit = async () => {
+    if (formData.name.length < 3) {
+      alert("Name size cannot be less then 3");
+      return;
+    }
+    if (formData.email.length < 3) {
+      alert("Email size cannot be less then 3");
+      return;
+    }
+    if (formData.password.length < 3) {
+      alert("Password size cannot be less then 3");
+      return;
+    }
+
     if (formData.password !== formData.confirmPassword) {
       alert("Passwords do not match!");
       return;

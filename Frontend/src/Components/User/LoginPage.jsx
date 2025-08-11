@@ -24,7 +24,14 @@ export default function LoginPage() {
   };
   const handleSubmit = async () => {
     try {
-      // console.log(formData.email, formData.password);
+      if(formData.email < 3){
+      alert("Email size cannot be less then 3");
+      return;
+      } 
+      if(formData.password < 3){
+      alert("Password size cannot be less then 3");
+      return;
+      }
       const response = await checkLoginCredentials(
         formData.email,
         formData.password
