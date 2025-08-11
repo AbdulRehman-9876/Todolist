@@ -5,10 +5,11 @@ import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
 import { Link } from "react-router-dom";
 import { useState } from "react";
-
+import { useNavigate } from "react-router-dom";
 import { createUser } from "../../Service/userApis";
 
 export default function RegisterPage() {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -29,10 +30,15 @@ export default function RegisterPage() {
       alert("Passwords do not match!");
       return;
     }
-    try{
-      const response = await createUser(formData.name,formData.email,formData.password);
+    try {
+      const response = await createUser(
+        formData.name,
+        formData.email,
+        formData.password
+      );
+      navigate("/login");
       return response.data;
-    }catch(err){
+    } catch (err) {
       console.log(`error while inserting data `, err);
     }
   };

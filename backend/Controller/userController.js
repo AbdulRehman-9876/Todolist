@@ -6,6 +6,7 @@ const authMiddleware = require("../Middelware/authMiddleware"); //middleware to 
 //Add user (register)
 const addUser = async (req, res) => {
   try {
+
     const { name, email, password } = req.body;
     const hash = bcrypt.hashSync(password, 10); //create hash
     const userDetails = new UserSchema({
@@ -17,7 +18,7 @@ const addUser = async (req, res) => {
     await userDetails.save();
     res.status(200).json(`User Siccessfully Created${userDetails}`);
   } catch (err) {
-    res.status(404).json({ message: `Error in adding user: ${err}` });
+    res.status(402).json({ message: `Error in adding user (Maybe Email Already Exists?): ${err}` });
   }
 };
 //Delete User from database
