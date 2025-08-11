@@ -1,13 +1,15 @@
 const UserSchema = require("../Schema/user");
+const bcrypt = require("bcrypt");
 
 //Add user (register)
 const addUser = async (req, res) => {
   try {
     const { name, email, password } = req.body;
+    const hash = bcrypt.hashSync(password, 10); //create hash
     const userDetails = new UserSchema({
       name: name,
       email: email,
-      password: password,
+      password: hash, //usingh hashed password
       dateCreated: Date.now(),
     });
     await userDetails.save();
@@ -47,12 +49,13 @@ const checkLoginCredentials = async (req, res) => {
     const { email, password } = req.body;
     const fetchUserDetails = await UserSchema.findOne({ email });
     if (!fetchUserDetails) {
-       res.status(400).json({ message: "user not found" });
-    } else if (fetchUserDetails.password != password) {
-       res.status(400).json({ message: "wrong password" });
+      res.status(400).json({ message: "user not found" });
+    } else if (await bcrypt.compare(password, fetchUserDetails.password)) {
+      console.log("User is authenticated");
+      res.status(200).json({ message: "User is authenticated" }); //works in case user provided valid email and password
     } else {
-       console.log("User is authenticated")
-       res.status(200).json({ message: "User is authenticated" }); //works in case user provided valid email and password
+      console.log("Wrong Password");
+      res.status(400).json({ message: "wrong password" });
     }
   } catch (err) {
     console.log(`Error while checking credentials ${err}`);
