@@ -3,9 +3,9 @@ import axios from "axios";
 const BASE_URL = "http://localhost:3003/todos/";
 const token = localStorage.getItem("token");
 
-const getAllItems = async () => {
+const getAllItems = async (user_id) => {
   try {
-    const response = await axios.get(BASE_URL + "get_items", {
+    const response = await axios.get(BASE_URL + `get_items/${user_id}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -31,10 +31,10 @@ const getSIngleItem = async (id) => {
   }
 };
 
-const createItem = async (description) => {
+const createItem = async (description, id) => {
   try {
     const response = await axios.post(
-      BASE_URL + "add_items",
+      BASE_URL + `add_items/${id}`,
       { description },
       {
         headers: {

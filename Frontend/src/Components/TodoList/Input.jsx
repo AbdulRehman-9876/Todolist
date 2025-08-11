@@ -4,6 +4,7 @@ import { createItem } from "../../Service/TodoListApis";
 import { useState } from "react";
 import { ReloadContext } from "./ReloadContext";
 import { useContext } from "react";
+import {jwtDecode} from "jwt-decode";
 
 export default function Input() {
   const { setShouldReload } = useContext(ReloadContext);
@@ -15,7 +16,13 @@ export default function Input() {
         alert("Description is empty");
         return;
       }
-      await createItem(description);
+      const token = localStorage.getItem("token");
+      let user_id;
+      if (token) {
+        const decoded = jwtDecode(token);
+         user_id = decoded.id;
+      }
+      await createItem(description,user_id);
       setShouldReload(true);
     } catch (err) {
       console.log(`Error in creating new record, ${err}`);

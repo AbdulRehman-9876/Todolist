@@ -73,7 +73,7 @@ export default function LoginPage() {
           sx={{ ml: 28, mt: 3 }}
           onClick={handleSubmit}
         >
-          Register
+          Login
         </Button>
       </Container>
     </>

@@ -1,12 +1,14 @@
-const TodoItemSchema = require("../Schema/todolist")
+const TodoItemSchema = require("../Schema/todolist");
 
 //add items
 const addItem = async (req, res) => {
   try {
     const { description } = req.body;
+    const user_id = req.params.id;
     const todoItem = new TodoItemSchema({
       description: description,
       isCompleted: false,
+      userId: user_id,
     });
     await todoItem.save();
     res.status(200).json(todoItem);
@@ -19,9 +21,12 @@ const addItem = async (req, res) => {
 const updateListDescription = async (req, res) => {
   try {
     const { description } = req.body;
-    const todoItemsFromDB = await TodoItemSchema.findByIdAndUpdate(req.params.id, {
-      new: true,
-    });
+    const todoItemsFromDB = await TodoItemSchema.findByIdAndUpdate(
+      req.params.id,
+      {
+        new: true,
+      }
+    );
     if (!todoItemsFromDB) {
       res.status(404).json({ message: "item not found" });
     } else {
@@ -37,9 +42,12 @@ const updateListDescription = async (req, res) => {
 //update list isComplete
 const updateIsComplete = async (req, res) => {
   try {
-    const todoItemsFromDB = await TodoItemSchema.findByIdAndUpdate(req.params.id, {
-      new: true,
-    });
+    const todoItemsFromDB = await TodoItemSchema.findByIdAndUpdate(
+      req.params.id,
+      {
+        new: true,
+      }
+    );
     if (!todoItemsFromDB) {
       res.status(404).json({ message: "item not found" });
     } else {
@@ -52,10 +60,11 @@ const updateIsComplete = async (req, res) => {
   }
 };
 
-//get all items
+//get all items for that specefic user
 const getAllItems = async (req, res) => {
   try {
-    const todoItemsFromDB = await TodoItemSchema.find();
+    const user_id = req.params.id
+    const todoItemsFromDB = await TodoItemSchema.find({userId: user_id});
     if (!todoItemsFromDB) {
       return res.status(404).json({ message: "item not found" });
     } else {
@@ -106,5 +115,5 @@ module.exports = {
   updateIsComplete,
   getAllItems,
   getSingleItem,
-  deleteItem
-}
+  deleteItem,
+};
