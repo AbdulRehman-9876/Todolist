@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const authMiddleware = require("../Middelware/authMiddleware"); //middleware to protect routes
 const {
   addItem,
   updateListDescription,
@@ -12,7 +13,7 @@ const {
 router.post("/add_items", addItem); //add items
 router.put("/update_itemDescription/:id", updateListDescription); //update list description
 router.put("/update_itemIsCompleted/:id", updateIsComplete); //update list isComplete
-router.get("/get_items", getAllItems); //get all items
+router.get("/get_items",authMiddleware, getAllItems); //get all items
 router.get("/get_item/:id", getSingleItem); //get single item
 router.delete("/delete_item/:id/:isCompleted", deleteItem); //delete single item
 

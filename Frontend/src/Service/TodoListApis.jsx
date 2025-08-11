@@ -1,11 +1,16 @@
 import axios from "axios";
 
-
 const BASE_URL = "http://localhost:3003/todos/";
 
 const getAllItems = async () => {
   try {
-    const response = await axios.get(BASE_URL + "get_items");
+    const token = localStorage.getItem("token");
+    const response = await axios.get(BASE_URL + "get_items",{
+        headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
+     
     return response.data;
   } catch (err) {
     console.log("Error in fetching data from database (frontend) " + err);

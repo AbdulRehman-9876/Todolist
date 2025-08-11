@@ -1,5 +1,7 @@
 const UserSchema = require("../Schema/user");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+const authMiddleware = require("../Middelware/authMiddleware"); //middleware to protect routes
 
 //Add user (register)
 const addUser = async (req, res) => {
@@ -52,7 +54,21 @@ const checkLoginCredentials = async (req, res) => {
       res.status(400).json({ message: "user not found" });
     } else if (await bcrypt.compare(password, fetchUserDetails.password)) {
       console.log("User is authenticated");
-      res.status(200).json({ message: "User is authenticated" }); //works in case user provided valid email and password
+      const token = jwt.sign(
+        { id: fetchUserDetails._id, email: fetchUserDetails.email }, // payload
+        process.env.JWT_SECRET, // secret key
+        { expiresIn: "1h" } // token expiry
+      );
+      // console.log("Token Sent:", token);
+
+      res.status(200).json({
+        message: "User is authenticated",
+        user: {
+          id: fetchUserDetails._id,
+          email: fetchUserDetails.email,
+        },
+        token,
+      }); //works in case user provided valid email and password
     } else {
       console.log("Wrong Password");
       res.status(400).json({ message: "wrong password" });
