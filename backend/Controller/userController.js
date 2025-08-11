@@ -6,7 +6,6 @@ const authMiddleware = require("../Middelware/authMiddleware"); //middleware to 
 //Add user (register)
 const addUser = async (req, res) => {
   try {
-
     const { name, email, password } = req.body;
     const hash = bcrypt.hashSync(password, 10); //create hash
     const userDetails = new UserSchema({
@@ -18,7 +17,11 @@ const addUser = async (req, res) => {
     await userDetails.save();
     res.status(200).json(`User Siccessfully Created${userDetails}`);
   } catch (err) {
-    res.status(402).json({ message: `Error in adding user (Maybe Email Already Exists?): ${err}` });
+    res
+      .status(402)
+      .json({
+        message: `Error in adding user (Maybe Email Already Exists?): ${err}`,
+      });
   }
 };
 //Delete User from database
@@ -52,8 +55,11 @@ const checkLoginCredentials = async (req, res) => {
     const { email, password } = req.body;
     const fetchUserDetails = await UserSchema.findOne({ email });
     if (!fetchUserDetails) {
-      res.status(400).json({ message: "user not found" });
-    } else if (await bcrypt.compare(password, fetchUserDetails.password)) {
+      return res.status(400).json({ message: "user not found" });
+    } else if (!(await bcrypt.compare(password, fetchUserDetails.password))) {
+      console.log("Wrong Password");
+      return res.status(400).json({ message: "wrong password" });
+    } else {
       console.log("User is authenticated");
       const token = jwt.sign(
         { id: fetchUserDetails._id, email: fetchUserDetails.email }, // payload
@@ -69,9 +75,6 @@ const checkLoginCredentials = async (req, res) => {
         },
         token,
       }); //works in case user provided valid email and password
-    } else {
-      console.log("Wrong Password");
-      res.status(400).json({ message: "wrong password" });
     }
   } catch (err) {
     console.log(`Error while checking credentials ${err}`);
