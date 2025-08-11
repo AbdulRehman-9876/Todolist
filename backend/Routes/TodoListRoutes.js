@@ -10,11 +10,11 @@ const {
   deleteItem,
 } = require("../Controller/TodoListController");
 
-router.post("/add_items", addItem); //add items
-router.put("/update_itemDescription/:id", updateListDescription); //update list description
-router.put("/update_itemIsCompleted/:id", updateIsComplete); //update list isComplete
+router.post("/add_items",authMiddleware, addItem); //add items
+router.put("/update_itemDescription/:id",authMiddleware, updateListDescription); //update list description
+router.put("/update_itemIsCompleted/:id",authMiddleware, updateIsComplete); //update list isComplete
 router.get("/get_items",authMiddleware, getAllItems); //get all items
-router.get("/get_item/:id", getSingleItem); //get single item
-router.delete("/delete_item/:id/:isCompleted", deleteItem); //delete single item
+router.get("/get_item/:id",authMiddleware, getSingleItem); //get single item
+router.delete("/delete_item/:id/:isCompleted",authMiddleware, deleteItem); //delete single item
 
 module.exports = router;

@@ -59,7 +59,6 @@ const checkLoginCredentials = async (req, res) => {
         process.env.JWT_SECRET, // secret key
         { expiresIn: "1h" } // token expiry
       );
-      // console.log("Token Sent:", token);
 
       res.status(200).json({
         message: "User is authenticated",
