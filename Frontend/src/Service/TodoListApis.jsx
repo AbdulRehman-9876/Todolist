@@ -1,11 +1,11 @@
 import axios from "axios";
 
-const BASE_URL = "http://localhost:3003/todos/";
+const BASE_URL = process.env.REACT_APP_FRONTEND_BASE_URL;
 const token = localStorage.getItem("token");
 
 const getAllItems = async (user_id) => {
   try {
-    const response = await axios.get(BASE_URL + `get_items/${user_id}`, {
+    const response = await axios.get(BASE_URL + `/todos/get_items/${user_id}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -20,7 +20,7 @@ const getAllItems = async (user_id) => {
 
 const getSIngleItem = async (id) => {
   try {
-    const response = await axios.get(BASE_URL + `get_item/${id}`, {
+    const response = await axios.get(BASE_URL + `/todos/get_item/${id}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -34,7 +34,7 @@ const getSIngleItem = async (id) => {
 const createItem = async (description, id) => {
   try {
     const response = await axios.post(
-      BASE_URL + `add_items/${id}`,
+      BASE_URL + `/todos/add_items/${id}`,
       { description },
       {
         headers: {
@@ -52,7 +52,7 @@ const deleteItem = async (id, isCompleted) => {
   try {
     console.log("ID insie delete item func: ", typeof id, id);
     const response = await axios.delete(
-      BASE_URL + `delete_item/${id}/${isCompleted}`,
+      BASE_URL + `/todos/delete_item/${id}/${isCompleted}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -68,7 +68,7 @@ const deleteItem = async (id, isCompleted) => {
 const updateDescription = async (id, description) => {
   try {
     const response = await axios.put(
-      BASE_URL + `update_itemDescription/${id}`,
+      BASE_URL + `/todos/update_itemDescription/${id}`,
       { description },
       {
         headers: {
@@ -85,7 +85,7 @@ const updateDescription = async (id, description) => {
 const updateIsCompleted = async (id) => {
   try {
     const response = await axios.put(
-      BASE_URL + `update_itemIsCompleted/${id}`,
+      BASE_URL + `/todos/update_itemIsCompleted/${id}`,
       {}, // request body (empty)
       {
         headers: {

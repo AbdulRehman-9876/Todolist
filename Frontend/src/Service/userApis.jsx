@@ -1,6 +1,7 @@
 import axios from "axios";
 
-const BASE_URL = "http://localhost:3003";
+const BASE_URL = process.env.REACT_APP_FRONTEND_BASE_URL;
+
 axios.defaults.headers.post["Content-Type"] = "application/json";
 
 const createUser = async (name, email, password) => {
