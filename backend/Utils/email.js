@@ -17,7 +17,6 @@ const transporter = nodemailer.createTransport({
       from: '"Example Team" <team@example.com>', // sender address
       to: "alice@example.com, bob@example.com", // list of receivers
       subject: "Hello", // Subject line
-      text: "Hello world?", // plain text body
       html: "<b>Hello world?</b>", // html body
     });
 
