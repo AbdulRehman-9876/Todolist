@@ -3,7 +3,8 @@ const userSchema = new mongoose.Schema({
   name: {type: String, required: true},
   dateCreated: {type: Date, default: Date.now()},
   email: {type: String, required: true, unique:true},
-  password: {type: String, required: true}
+  password: {type: String, required: true},
+  IsVerified: {type: Boolean, default: false}
 });
 
 module.exports = mongoose.model("user",userSchema);
