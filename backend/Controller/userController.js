@@ -2,27 +2,52 @@ const UserSchema = require("../Schema/user");
 const TodoListSchema = require("../Schema/todolist");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const OTP_Schema = require("../Schema/otp")
+const sendEmail = require("../Utils/email")
+const otpGenerator = require("../Utils/otpGenerator")
 
 //Add user (register)
 const addUser = async (req, res) => {
   try {
     const { name, email, password } = req.body;
-    const hash = bcrypt.hashSync(password, 10); //create hash
+
+    // Hash password
+    const hash = bcrypt.hashSync(password, 10);
+
+    // Create user
     const userDetails = new UserSchema({
-      name: name,
-      email: email,
-      password: hash, //usingh hashed password
+      name,
+      email,
+      password: hash,
       dateCreated: Date.now(),
       IsVerified: false,
     });
     await userDetails.save();
-    res.status(200).json(`User Siccessfully Created${userDetails}`);
+
+    // Generate OTP
+    const generatedOTP = otpGenerator();
+
+    // Send OTP via email
+    await sendEmail(email, generatedOTP);
+
+    // Save OTP in DB
+    const otp = new OTP_Schema({
+      user_id: userDetails._id,
+      creationDate: Date.now(),
+      expiryDate: Date.now() + (5 * 60 * 1000),
+      otp_code: generatedOTP
+    });
+    await otp.save();
+
+    res.status(200).json({
+      message: "User created, waiting for OTP to verify user. OTP expires in 5 minutes." });
+
   } catch (err) {
     res.status(402).json({
-      message: `Error in adding user (Maybe Email Already Exists?): ${err}`,
-    });
+      message: `Error in adding user (Maybe Email Already Exists?): ${err.message}`});
   }
 };
+
 //Delete User from database
 const deleteUser = async (req, res) => {
   try {
