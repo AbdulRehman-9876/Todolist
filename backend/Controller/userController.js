@@ -1,5 +1,5 @@
 const UserSchema = require("../Schema/user");
-const TodoListSchema = require("../Schema/todolist")
+const TodoListSchema = require("../Schema/todolist");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
@@ -13,32 +13,36 @@ const addUser = async (req, res) => {
       email: email,
       password: hash, //usingh hashed password
       dateCreated: Date.now(),
+      IsVerified: false,
     });
     await userDetails.save();
     res.status(200).json(`User Siccessfully Created${userDetails}`);
   } catch (err) {
-    res
-      .status(402)
-      .json({
-        message: `Error in adding user (Maybe Email Already Exists?): ${err}`,
-      });
+    res.status(402).json({
+      message: `Error in adding user (Maybe Email Already Exists?): ${err}`,
+    });
   }
 };
 //Delete User from database
 const deleteUser = async (req, res) => {
   try {
-    const { id } = req.user.id;
-    // 1. delete all the data of user
-    const deletedSchemas = await TodoListSchema.deleteMany({userId: id})
-    // 2. delete user himself
-    const deletedUser = await UserSchema.findByIdAndDelete(id, {
-      new: true,
+    const id = req.user.id; 
+
+    // 1. Delete all the user's todos
+    const deletedSchemas = await TodoListSchema.deleteMany({ userId: id });
+
+    // 2. Delete the user himself
+    const deletedUser = await UserSchema.findByIdAndDelete(id);
+
+    return res.status(200).json({
+      message: "User and their data deleted successfully",
+      deletedUser,
+      deletedSchemas,
     });
-    res
-      .json(200)
-      .message({ message: `User and their data deleated succesfully ${deletedUser, deletedSchemas}` });
   } catch (err) {
-    res.status(404).json({ message: `Error in deleting user: ${err}` });
+    return res.status(500).json({
+      message: `Error in deleting user: ${err.message}`,
+    });
   }
 };
 

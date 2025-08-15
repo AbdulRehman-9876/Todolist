@@ -6,9 +6,11 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import { deleteUser } from "../../Service/userApis";
+import { useNavigate } from "react-router-dom";
 
 export default function MyComponent() {
   const [open, setOpen] = useState(false);
+  const navigate = useNavigate();
 
   const handleDeleteClick = () => {
     setOpen(true);
@@ -19,8 +21,11 @@ export default function MyComponent() {
   };
   const handleDelete = async () => {
     try {
-      const deletedUser = await deleteUser();
+      await deleteUser();
       setOpen(false);
+      //if successfully deleted then we will remove the token
+      localStorage.removeItem("token"); //removes the token
+      navigate("/"); //navigate back to register page
       return deleteUser;
     } catch (error) {
       console.log("Error deleting user", error);

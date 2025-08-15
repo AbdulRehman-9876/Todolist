@@ -1,8 +1,7 @@
 import axios from "axios";
 
 const BASE_URL = process.env.REACT_APP_FRONTEND_BASE_URL;
-
-axios.defaults.headers.post["Content-Type"] = "application/json";
+const token = localStorage.getItem("token");
 
 const createUser = async (name, email, password) => {
   try {
@@ -26,7 +25,11 @@ const getUserData = async () => {
 };
 const deleteUser = async () => {
   try {
-    const response = await axios.delete(`${BASE_URL}/user/deleteUser`);
+    const response = await axios.delete(`${BASE_URL}/user/deleteUser`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      }
+    });
     return response.data;
   } catch (err) {
     console.log(`err deleting user ${err}`);
