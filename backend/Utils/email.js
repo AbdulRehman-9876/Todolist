@@ -1,28 +1,27 @@
-const nodemailer = require("nodemailer");
+const nodemailer = require('nodemailer');
+require('dotenv').config(); // Make sure .env variables are loaded
 
-// Create a transporter for SMTP
 const transporter = nodemailer.createTransport({
-  host: "smtp.example.com",
-  port: 587,
-  secure: false, // upgrade later with STARTTLS
+  service: 'gmail',
   auth: {
-    user: process.env.SMTP_USER,
-    pass: process.env.SMTP_PASS,
-  },
+    user: process.env.APP_EMAIL,
+    pass: process.env.APP_PASSWORD
+  }
 });
 
-(async () => {
+async function sendMail(email, OTP) {
   try {
-    const info = await transporter.sendMail({
-      from: '"Example Team" <team@example.com>', // sender address
-      to: "alice@example.com, bob@example.com", // list of receivers
-      subject: "Hello", // Subject line
-      html: "<b>Hello world?</b>", // html body
+    let info = await transporter.sendMail({
+      from: `"Todolist" <${process.env.APP_EMAIL}>`,
+      to: email,
+      subject: 'Confirm Registration',
+      html: `Your OTP is: <b>${OTP}</b>`
     });
 
-    console.log("Message sent: %s", info.messageId);
-    console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
-  } catch (err) {
-    console.error("Error while sending mail", err);
+    console.log('✅ Email sent:', info.messageId);
+  } catch (error) {
+    console.error('❌ Error sending email:', error);
   }
-})();
+}
+
+module.exports = sendMail; 
