@@ -16,17 +16,17 @@ const createUser = async (name, email, password) => {
     console.log(`error in creating user ${err}`);
   }
 };
-const getUserData = async (id) => {
+const getUserData = async () => {
   try {
-    const response = await axios.get(`${BASE_URL}/user/getUserDetails/${id}`);
+    const response = await axios.get(`${BASE_URL}/user/getUserDetails`);
     return response.data;
   } catch (err) {
     console.log(`error in fetching user data ${err}`);
   }
 };
-const deleteUser = async (id) => {
+const deleteUser = async () => {
   try {
-    const response = await axios.delete(`${BASE_URL}/user/deleteUser/${id}`);
+    const response = await axios.delete(`${BASE_URL}/user/deleteUser`);
     return response.data;
   } catch (err) {
     console.log(`err deleting user ${err}`);

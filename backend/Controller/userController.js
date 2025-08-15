@@ -1,7 +1,6 @@
 const UserSchema = require("../Schema/user");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const authMiddleware = require("../Middelware/authMiddleware"); //middleware to protect routes
 
 //Add user (register)
 const addUser = async (req, res) => {
@@ -27,7 +26,7 @@ const addUser = async (req, res) => {
 //Delete User from database
 const deleteUser = async (req, res) => {
   try {
-    const { id } = req.params;
+    const { id } = req.user.id;
     const deletedUser = await UserSchema.findByIdAndDelete(id, {
       new: true,
     });
@@ -42,7 +41,7 @@ const deleteUser = async (req, res) => {
 //Get user details from database
 const getUserDetails = async (req, res) => {
   try {
-    const { id } = req.params;
+    const { id } = req.user.id;
     const fetchUserDetails = await UserSchema.findById(id);
     res.status(200).json(fetchUserDetails);
   } catch (err) {
