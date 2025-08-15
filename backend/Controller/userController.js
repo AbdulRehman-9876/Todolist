@@ -1,4 +1,5 @@
 const UserSchema = require("../Schema/user");
+const TodoListSchema = require("../Schema/todolist")
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
@@ -27,12 +28,15 @@ const addUser = async (req, res) => {
 const deleteUser = async (req, res) => {
   try {
     const { id } = req.user.id;
+    // 1. delete all the data of user
+    const deletedSchemas = await TodoListSchema.deleteMany({userId: id})
+    // 2. delete user himself
     const deletedUser = await UserSchema.findByIdAndDelete(id, {
       new: true,
     });
     res
       .json(200)
-      .message({ message: `User Deleted Successfully ${deletedUser}` });
+      .message({ message: `User and their data deleated succesfully ${deletedUser, deletedSchemas}` });
   } catch (err) {
     res.status(404).json({ message: `Error in deleting user: ${err}` });
   }
