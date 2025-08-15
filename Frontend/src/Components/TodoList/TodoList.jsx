@@ -3,7 +3,6 @@ import CompletedTask from "../TodoList/CompletedTask";
 import Input from "../TodoList/Input";
 import LogoutButton from "../User/LogoutButton";
 import DeleteUserButton from "../User/DeleteUserButton";
-
 export default function TodoList() {
   return (
     <>
