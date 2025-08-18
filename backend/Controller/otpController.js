@@ -41,7 +41,7 @@ const verifyOtp = async (req, res) => {
     await user.save();
 
     // 6. Delete OTP after successful verification
-    await OTP_Schema.deleteOne({ user_id: id });
+    await otpRecord.deleteOne({ user_id: id });
 
     return res.status(200).json({ message: "OTP verified successfully" });
   } catch (err) {

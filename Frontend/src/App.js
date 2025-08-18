@@ -12,25 +12,25 @@ function App() {
 
   return (
     <>
-      <Container maxWidth="lg">
-        <ReloadContext.Provider value={{ shouldReload, setShouldReload }}>
-          <BrowserRouter>
-            <Routes>
-              <Route path="/" element={<RegisterPage />}></Route>
-              <Route
-                path="TodoList/"
-                element={
-                  <ProtectedRoute>
-                    <Todolist />{" "}
-                  </ProtectedRoute>
-                }
-              ></Route>
-              <Route path="/verifyOtp" element={<VerifyUserOTP/>}></Route>
-              <Route path="Login" element={<LoginPage />}></Route>
-            </Routes>
-          </BrowserRouter>
-        </ReloadContext.Provider>
-      </Container>
+        <Container maxWidth="lg">
+          <ReloadContext.Provider value={{ shouldReload, setShouldReload }}>
+            <BrowserRouter>
+              <Routes>
+                <Route path="/" element={<RegisterPage />}></Route>
+                <Route
+                  path="TodoList/"
+                  element={
+                    <ProtectedRoute>
+                      <Todolist />{" "}
+                    </ProtectedRoute>
+                  }
+                ></Route>
+                <Route path="/verifyOtp" element={<VerifyUserOTP/>}></Route>
+                <Route path="Login" element={<LoginPage />}></Route>
+              </Routes>
+            </BrowserRouter>
+          </ReloadContext.Provider>
+        </Container>
     </>
   );
 }

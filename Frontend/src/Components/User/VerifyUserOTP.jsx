@@ -39,7 +39,7 @@ export default function VerifyUserOTP() {
     <>
       {" "}
       <Container maxWidth="sm">
-        <Typography sx={{ mt: 15, mb: 3, ml: 20 }} variant="h5">
+        <Typography sx={{ mt: 15, mb: 3, ml: 27 }} variant="h5">
           Verify OTP
         </Typography>{" "}
         <Stack spacing={4}>
