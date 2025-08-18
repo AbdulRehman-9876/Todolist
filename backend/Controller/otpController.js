@@ -3,9 +3,9 @@ const UserSchema = require("../Schema/user");
 
 const verifyOtp = async (req, res) => {
   try {
-    const { email } = req.params;      
-    const { otp_code } = req.body;   
-    
+    const { email } = req.params;
+    const { otp_code } = req.body;
+
     // 1. Find user by email
     const findUser = await UserSchema.findOne({ email });
     if (!findUser) {
@@ -21,7 +21,9 @@ const verifyOtp = async (req, res) => {
 
     // 3. Check expiry
     if (new Date(otpRecord.expiryDate) < new Date()) {
-      return res.status(400).json({ message: "OTP expired, please request a new one" });
+      return res
+        .status(400)
+        .json({ message: "OTP expired, please request a new one" });
     }
 
     // 4. Check OTP match
@@ -30,20 +32,23 @@ const verifyOtp = async (req, res) => {
     }
 
     // 5. OTP is valid → update user
-    await UserSchema.findByIdAndUpdate(
-      id,
-      { IsVerified: true },
-      { new: true }
-    );
+    const user = await UserSchema.findById(id);
+    if (!user) {
+      return res.status(400).json({ message: "User not found" });
+    }
+
+    user.IsVerified = true;
+    await user.save();
 
     // 6. Delete OTP after successful verification
     await OTP_Schema.deleteOne({ user_id: id });
 
     return res.status(200).json({ message: "OTP verified successfully" });
-
   } catch (err) {
     console.error("Error verifying OTP:", err);
-    return res.status(500).json({ message: "Server error while verifying OTP" });
+    return res
+      .status(500)
+      .json({ message: "Server error while verifying OTP" });
   }
 };
 
