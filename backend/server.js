@@ -4,7 +4,7 @@ const app = express();
 const cors = require("cors");
 const TodoListRoutes = require("./Routes/TodoListRoutes")
 const UserRoutes = require("./Routes/userRoutes")
-
+const OtpRoute = require("./Routes/OtpRoute")
 require("dotenv").config();
 app.use(cors());
 app.use(express.json());
@@ -26,3 +26,4 @@ mongoose
 
 app.use("/todos",TodoListRoutes);
 app.use("/user",UserRoutes);
+app.use("/otp",OtpRoute);
