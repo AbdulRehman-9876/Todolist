@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
@@ -12,6 +12,18 @@ import { useState } from "react";
 export default function VerifyUserOTP() {
   const location = useLocation();
   const navigate = useNavigate();
+  const [time, setTime] = useState(300);
+  const minutes = Math.floor(time / 60);
+  const seconds = time % 60;
+  useEffect(() => {
+    if (time <= 0) return; // stop at 0
+
+    const timer = setInterval(() => {
+      setTime((prevTime) => prevTime - 1); // decrease by 1 every second
+    }, 1000);
+
+    return () => clearInterval(timer); // cleanup on unmount
+  }, [time]);
 
   const { email } = location.state || {}; // safely destructure
 
@@ -30,7 +42,7 @@ export default function VerifyUserOTP() {
   const handleSubmit = async () => {
     try {
       await verifyOtp(email, formData.otpData);
-      navigate("/login")
+      navigate("/login");
     } catch (err) {
       console.log("error while handling otp", err);
     }
@@ -60,6 +72,10 @@ export default function VerifyUserOTP() {
         >
           Confirm
         </Button>{" "}
+        <Typography sx={{ mt: 2, mb: 3, ml: 25 }}>
+          OTP Expires in {minutes}:{seconds < 10 ? `0${seconds}` : seconds}
+          s
+        </Typography>
       </Container>
     </>
   );
