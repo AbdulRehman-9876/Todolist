@@ -1,6 +1,6 @@
 import TextField from "@mui/material/TextField";
 import Stack from "@mui/material/Stack";
-import Typography, { typographyClasses } from "@mui/material/Typography";
+import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
 import { Link } from "react-router-dom";
@@ -49,7 +49,7 @@ export default function RegisterPage() {
         formData.email,
         formData.password
       );
-      navigate("/login");
+      navigate("/verifyOtp");
       return response.data;
     } catch (err) {
       console.log(`error while inserting data `, err);
