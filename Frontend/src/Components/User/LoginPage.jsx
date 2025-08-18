@@ -5,7 +5,7 @@ import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import { checkLoginCredentials } from "../../Service/userApis";
+import { checkLoginCredentials, getUserData } from "../../Service/userApis";
 import { useNavigate } from "react-router-dom";
 
 export default function LoginPage() {
@@ -32,6 +32,8 @@ export default function LoginPage() {
       alert("Password size cannot be less then 3");
       return;
       }
+      //check if user is authenticated or not
+      
       const response = await checkLoginCredentials(
         formData.email,
         formData.password

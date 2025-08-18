@@ -113,10 +113,21 @@ const checkLoginCredentials = async (req, res) => {
   }
 };
 
+const getIsVerified = async() => {
+  try{
+  const response = await UserSchema.findOne({email: _email})
+  res.status(200).json(response);
+  } catch(err){
+    console.log(err);
+  }
+
+}
+
 
 module.exports = {
   addUser,
   deleteUser,
   getUserDetails,
   checkLoginCredentials,
+  getIsVerified,
 };
