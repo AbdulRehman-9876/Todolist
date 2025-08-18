@@ -6,7 +6,7 @@ import { useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import LoginPage from "./Components/User/LoginPage";
 import ProtectedRoute from "./Components/ProtectedRoute";
-
+import VerifyUserOTP from "./Components/User/VerifyUserOTP"
 function App() {
   const [shouldReload, setShouldReload] = useState(true);
 
@@ -25,6 +25,7 @@ function App() {
                   </ProtectedRoute>
                 }
               ></Route>
+              <Route path="/verifyOtp" element={<VerifyUserOTP/>}></Route>
               <Route path="Login" element={<LoginPage />}></Route>
             </Routes>
           </BrowserRouter>
