@@ -72,9 +72,11 @@ export default function VerifyUserOTP() {
         >
           Confirm
         </Button>{" "}
+        <Button color="secodary" variant="contained" sx={{ ml: 13, mt: 3 }} disabled >
+          Re-send OTP
+        </Button>
         <Typography sx={{ mt: 2, mb: 3, ml: 25 }}>
-          OTP Expires in {minutes}:{seconds < 10 ? `0${seconds}` : seconds}
-          s
+          OTP Expires in {minutes}:{seconds < 10 ? `0${seconds}` : seconds}s
         </Typography>
       </Container>
     </>
