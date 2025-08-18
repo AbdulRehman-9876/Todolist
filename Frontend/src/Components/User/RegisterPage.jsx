@@ -49,7 +49,8 @@ export default function RegisterPage() {
         formData.email,
         formData.password
       );
-      navigate("/verifyOtp");
+      navigate("/verifyOtp",{state: {email: formData.email}});
+      
       return response.data;
     } catch (err) {
       console.log(`error while inserting data `, err);

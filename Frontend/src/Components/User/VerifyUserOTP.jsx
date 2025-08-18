@@ -4,9 +4,17 @@ import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import Container from "@mui/material/Container";
 import Stack from "@mui/material/Stack";
+import { verifyOtp } from "../../Service/OtpApis";
+import { useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import { useState } from "react";
 export default function VerifyUserOTP() {
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const { email } = location.state || {}; // safely destructure
+
   const [formData, setFormData] = useState({
     otpData: "",
   });
@@ -19,7 +27,14 @@ export default function VerifyUserOTP() {
     });
   };
 
-  const handleSubmit = () => {};
+  const handleSubmit = async () => {
+    try {
+      await verifyOtp(email, formData.otpData);
+      navigate("/login")
+    } catch (err) {
+      console.log("error while handling otp", err);
+    }
+  };
   return (
     <>
       {" "}

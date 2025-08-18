@@ -4,6 +4,6 @@ const {
   verifyOtp
 } = require("../Controller/otpController")
 
-router.put(`/verifyOTP`,verifyOtp )
+router.put(`/verifyOTP/:email`,verifyOtp )
 
 module.exports = router;
