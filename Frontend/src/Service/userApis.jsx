@@ -49,5 +49,14 @@ const checkLoginCredentials = async (email, password) => {
     console.log(`error in checking user details`, err);
   }
 };
+const isVerified = async(_email) => {
+  try{
+    const response = await axios.get(`${BASE_URL}/user/getIsVerified/${encodeURIComponent(_email)}`)
+    console.log(response.data);
+    return response.data;
+  } catch(err){
+    console.log(err);
+  }
+}
 
-export { createUser, getUserData, deleteUser, checkLoginCredentials };
+export { createUser, getUserData, deleteUser, checkLoginCredentials,isVerified };

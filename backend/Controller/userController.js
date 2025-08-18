@@ -113,11 +113,13 @@ const checkLoginCredentials = async (req, res) => {
   }
 };
 
-const getIsVerified = async() => {
+const getIsVerified = async(req, res) => {
   try{
+    const { _email }= req.params;
   const response = await UserSchema.findOne({email: _email})
-  res.status(200).json(response);
+  res.status(200).json(response.IsVerified);
   } catch(err){
+      res.status(401).json({message:"verifiation failed"});
     console.log(err);
   }
 

@@ -5,7 +5,7 @@ import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import { checkLoginCredentials, getUserData } from "../../Service/userApis";
+import { checkLoginCredentials, isVerified } from "../../Service/userApis";
 import { useNavigate } from "react-router-dom";
 
 export default function LoginPage() {
@@ -16,29 +16,39 @@ export default function LoginPage() {
   });
 
   // Update state based on ID
-  const handleChange = (e) => {
+  const handleChange = async (e) => {
     setFormData({
       ...formData,
       [e.target.id]: e.target.value,
     });
   };
   const handleSubmit = async () => {
-    try {
-      if(formData.email < 3){
+    if (formData.email < 3) {
       alert("Email size cannot be less then 3");
       return;
-      } 
-      if(formData.password < 3){
+    }
+    if (formData.password < 3) {
       alert("Password size cannot be less then 3");
       return;
+    }
+    try {
+      //check if user is verified or not
+      const getResponse = await isVerified(formData.email);
+      if(getResponse === false){
+        alert("User is not verified")
+        return;
       }
-      //check if user is authenticated or not
-      
+    } catch (err) {
+      console.log("User is not verified");
+      return;
+    }
+
+    try {
       const response = await checkLoginCredentials(
         formData.email,
         formData.password
       );
-      navigate("/TodoList")
+      navigate("/TodoList");
       return response.data;
     } catch (err) {
       console.log("Error in handelSubmit ", err);
